@@ -6,7 +6,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 
 interface EditorToolbarProps {
   onContinueWriting: () => void;
@@ -24,6 +24,21 @@ export default function EditorToolbar({
   isLoading,
   disabled,
 }: EditorToolbarProps) {
+  
+  /**
+   * Handle continue writing button click
+   */
+  const handleContinueClick = useCallback(() => {
+    onContinueWriting();
+  }, [onContinueWriting]);
+
+  /**
+   * Handle reset button click
+   */
+  const handleResetClick = useCallback(() => {
+    onReset();
+  }, [onReset]);
+
   return (
     <div className="mb-4 flex items-center justify-between gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
       <div className="flex items-center gap-2">
@@ -56,10 +71,11 @@ export default function EditorToolbar({
       <div className="flex items-center gap-2">
         {/* Reset Button */}
         <button
-          onClick={onReset}
+          onClick={handleResetClick}
           disabled={isLoading}
           className="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           title="Clear editor"
+          aria-label="Clear editor"
         >
           <svg
             className="w-4 h-4"
@@ -78,7 +94,7 @@ export default function EditorToolbar({
 
         {/* Continue Writing Button */}
         <button
-          onClick={onContinueWriting}
+          onClick={handleContinueClick}
           disabled={disabled}
           className={`
             px-6 py-2 text-sm font-semibold text-white rounded-lg
@@ -89,6 +105,7 @@ export default function EditorToolbar({
                 : 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-md hover:shadow-lg'
             }
           `}
+          aria-label="Continue writing with AI"
         >
           {isLoading ? (
             <>
@@ -118,4 +135,3 @@ export default function EditorToolbar({
     </div>
   );
 }
-

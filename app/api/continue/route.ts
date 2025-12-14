@@ -1,13 +1,13 @@
 /**
  * API Route: /api/continue
  * 
- * Handles AI text continuation requests.
+ * Handles AI text continuation requests using OpenAI.
  * Accepts text input and returns AI-generated continuation.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { continueWriting } from '@/lib/aiService';
-import { ContinueWritingRequest, AIProvider } from '@/lib/types';
+import { continueWriting } from '@/lib/ai-service';
+import { ContinueWritingRequest } from '@/lib/types';
 
 /**
  * POST /api/continue
@@ -21,7 +21,6 @@ import { ContinueWritingRequest, AIProvider } from '@/lib/types';
  * Response:
  * {
  *   continuedText: string,
- *   provider: string,
  *   error?: string
  * }
  */
@@ -45,18 +44,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get AI provider from environment
-    const provider = (process.env.AI_PROVIDER as AIProvider) || 'openai';
-
-    // Call AI service
-    const result = await continueWriting(body, provider);
+    // Call AI service (OpenAI)
+    const result = await continueWriting(body);
 
     // Check if there was an error
     if (result.error) {
       return NextResponse.json(
         {
           continuedText: '',
-          provider: result.provider,
           error: result.error,
         },
         { status: 500 }
@@ -66,7 +61,6 @@ export async function POST(request: NextRequest) {
     // Return successful response
     return NextResponse.json({
       continuedText: result.continuedText,
-      provider: result.provider,
     });
   } catch (error) {
     console.error('Error in /api/continue:', error);
@@ -74,7 +68,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         continuedText: '',
-        provider: 'unknown',
         error: error instanceof Error ? error.message : 'Unknown error occurred',
       },
       { status: 500 }
@@ -91,7 +84,6 @@ export async function GET() {
   return NextResponse.json({
     status: 'ok',
     message: 'AI continuation API is running',
-    provider: process.env.AI_PROVIDER || 'openai',
+    provider: 'openai',
   });
 }
-

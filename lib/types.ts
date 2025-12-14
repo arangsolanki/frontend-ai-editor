@@ -3,11 +3,6 @@
  */
 
 /**
- * AI Service Provider types
- */
-export type AIProvider = 'openai' | 'huggingface';
-
-/**
  * Request to continue writing text
  */
 export interface ContinueWritingRequest {
@@ -20,7 +15,6 @@ export interface ContinueWritingRequest {
  */
 export interface ContinueWritingResponse {
   continuedText: string;
-  provider: AIProvider;
   error?: string;
 }
 
@@ -51,16 +45,3 @@ export type EditorEvent =
   | { type: 'SUCCESS'; generatedText: string }
   | { type: 'ERROR'; error: string }
   | { type: 'RESET' };
-
-/**
- * Configuration for AI services
- */
-export interface AIConfig {
-  provider: AIProvider;
-  openaiApiKey?: string;
-  huggingfaceApiKey?: string;
-  huggingfaceModel?: string;
-  maxTokens?: number;
-  temperature?: number;
-}
-

@@ -7,18 +7,18 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { EditorView } from 'prosemirror-view';
 import { useMachine } from '@xstate/react';
-import { editorMachine } from '@/lib/editorMachine';
+import { editorMachine } from '@/lib/editor-machine';
 import { 
   createEditorState, 
   createEditorView, 
   insertTextWithTypingEffect,
   getTextContent 
-} from '@/lib/prosemirrorSetup';
-import { ContinueWritingResponse } from '@/lib/types';
-import EditorToolbar from './EditorToolbar';
+} from '@/lib/prosemirror-setup';
+import type { ContinueWritingResponse } from '@/lib/types';
+import EditorToolbar from './editor-toolbar';
 
 /**
  * Main Editor Component
@@ -69,7 +69,7 @@ export default function Editor() {
    * Handle "Continue Writing" button click
    * Sends event to XState machine and makes API call
    */
-  const handleContinueWriting = async () => {
+  const handleContinueWriting = useCallback(async () => {
     if (!viewRef.current) return;
     
     const currentText = getTextContent(viewRef.current);
@@ -121,12 +121,12 @@ export default function Editor() {
       setIsTyping(false); // Reset typing state on error
       send({ type: 'ERROR', error: errorMessage });
     }
-  };
+  }, [send]);
 
   /**
    * Handle reset button click
    */
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     if (!viewRef.current) return;
     
     // Clear the editor content
@@ -136,7 +136,7 @@ export default function Editor() {
     
     // Reset the state machine
     send({ type: 'RESET' });
-  };
+  }, [send]);
 
   // Get current machine state
   const isLoading = state.matches('loading');
@@ -229,4 +229,3 @@ export default function Editor() {
     </div>
   );
 }
-

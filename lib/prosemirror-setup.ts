@@ -5,7 +5,7 @@
  */
 
 import { Schema } from 'prosemirror-model';
-import { EditorState, Plugin, Transaction } from 'prosemirror-state';
+import { EditorState, Plugin, Transaction, Selection, TextSelection } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { schema as basicSchema } from 'prosemirror-schema-basic';
 import { keymap } from 'prosemirror-keymap';
@@ -110,7 +110,7 @@ export function insertTextAtEnd(view: EditorView, text: string): void {
   // Move cursor to the end
   const newEndPos = view.state.doc.content.size - 1;
   const newTr = view.state.tr.setSelection(
-    view.state.selection.constructor.near(view.state.doc.resolve(newEndPos))
+    TextSelection.near(view.state.doc.resolve(newEndPos))
   );
   view.dispatch(newTr);
 }
@@ -158,7 +158,7 @@ export async function insertTextWithTypingEffect(
   view.focus();
   const finalPos = view.state.doc.content.size - 1;
   const finalTr = view.state.tr.setSelection(
-    view.state.selection.constructor.near(view.state.doc.resolve(finalPos))
+    TextSelection.near(view.state.doc.resolve(finalPos))
   );
   view.dispatch(finalTr);
 }
@@ -205,16 +205,18 @@ export interface EditorViewConfig {
  * Helper to create an EditorView with common configuration
  */
 export function createEditorView(config: EditorViewConfig): EditorView {
-  return new EditorView(config.mount, {
+  const view = new EditorView(config.mount, {
     state: config.state,
     dispatchTransaction(transaction: Transaction) {
-      const newState = this.state.apply(transaction);
-      this.updateState(newState);
+      const newState = view.state.apply(transaction);
+      view.updateState(newState);
       
       if (config.onUpdate && transaction.docChanged) {
         config.onUpdate(newState.doc.textContent);
       }
     },
   });
+  
+  return view;
 }
 

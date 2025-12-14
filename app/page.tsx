@@ -5,7 +5,7 @@
  * Displays the editor and provides information about the app.
  */
 
-import Editor from '@/components/Editor/Editor';
+import Editor from '@/components/editor/editor';
 
 export default function Home() {
   return (

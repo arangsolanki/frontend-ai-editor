@@ -58,7 +58,7 @@ This project is an AI-assisted text editor that allows users to write text and h
 - **Clear Editor** - Reset button to start fresh
 
 ### Technical Features
-- **Dual AI Provider Support** - OpenAI and Hugging Face
+- **OpenAI Integration** - GPT-powered text generation
 - **Type Safety** - Comprehensive TypeScript coverage
 - **Modular Architecture** - Clean separation of concerns
 - **API Routes** - Next.js API routes for backend logic
@@ -86,7 +86,6 @@ This project is an AI-assisted text editor that allows users to write text and h
 
 ### AI Integration
 - **OpenAI API** - GPT-3.5/4 text generation
-- **Hugging Face Inference API** - Alternative AI provider
 
 ## 🏗 Architecture
 
@@ -157,7 +156,7 @@ lib/
 
 - **Node.js** 22.0.0 or higher
 - **npm** or **yarn** or **pnpm**
-- **OpenAI API Key** or **Hugging Face API Token**
+- **OpenAI API Key**
 
 ### Installation
 
@@ -183,15 +182,8 @@ pnpm install
 Create a `.env.local` file in the root directory:
 
 ```bash
-# Choose your AI provider: 'openai' or 'huggingface'
-AI_PROVIDER=openai
-
-# OpenAI Configuration (if using OpenAI)
+# OpenAI Configuration
 OPENAI_API_KEY=your_openai_api_key_here
-
-# Hugging Face Configuration (if using Hugging Face)
-# HUGGINGFACE_API_KEY=your_huggingface_token_here
-# HUGGINGFACE_MODEL=mistralai/Mistral-7B-Instruct-v0.2
 ```
 
 4. **Run the development server**
@@ -210,19 +202,12 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 
 ### Getting API Keys
 
-#### OpenAI (Recommended)
+#### OpenAI
 1. Visit [platform.openai.com](https://platform.openai.com)
 2. Sign up or log in
 3. Navigate to API Keys section
 4. Create a new API key
 5. Add billing information (pay-as-you-go)
-
-#### Hugging Face (Free Tier Available)
-1. Visit [huggingface.co](https://huggingface.co)
-2. Sign up or log in
-3. Go to Settings → Access Tokens
-4. Create a new token with read permissions
-5. Use serverless inference API (free tier available)
 
 ## ⚙️ Configuration
 
@@ -230,28 +215,7 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `AI_PROVIDER` | No | `openai` | AI service provider: `openai` or `huggingface` |
-| `OPENAI_API_KEY` | Yes* | - | OpenAI API key |
-| `HUGGINGFACE_API_KEY` | Yes** | - | Hugging Face API token |
-| `HUGGINGFACE_MODEL` | No | `mistralai/Mistral-7B-Instruct-v0.2` | HF model to use |
-
-\* Required if `AI_PROVIDER=openai`  
-\** Required if `AI_PROVIDER=huggingface`
-
-### Switching AI Providers
-
-Edit `.env.local`:
-
-```bash
-# For OpenAI
-AI_PROVIDER=openai
-OPENAI_API_KEY=sk-...
-
-# For Hugging Face
-AI_PROVIDER=huggingface
-HUGGINGFACE_API_KEY=hf_...
-HUGGINGFACE_MODEL=mistralai/Mistral-7B-Instruct-v0.2
-```
+| `OPENAI_API_KEY` | Yes | - | OpenAI API key |
 
 Restart the development server after changing environment variables.
 
@@ -327,8 +291,6 @@ frontend-task-chq/
 #### `/lib/aiService.ts`
 - AI integration logic
 - OpenAI API client
-- Hugging Face API client
-- Provider abstraction layer
 - Error handling
 
 #### `/lib/editorMachine.ts`
@@ -449,7 +411,7 @@ const [state, send] = useMachine(editorMachine);
 
 ### AI Integration
 
-Supports multiple providers with a unified interface:
+Integration with OpenAI API:
 
 ```typescript
 // OpenAI
@@ -460,13 +422,6 @@ const response = await fetch('https://api.openai.com/v1/chat/completions', {
     model: 'gpt-3.5-turbo',
     messages: [{ role: 'user', content: prompt }],
   }),
-});
-
-// Hugging Face
-const response = await fetch(`https://api-inference.huggingface.co/models/${model}`, {
-  method: 'POST',
-  headers: { 'Authorization': `Bearer ${apiKey}` },
-  body: JSON.stringify({ inputs: prompt }),
 });
 ```
 
@@ -490,11 +445,11 @@ const response = await fetch(`https://api-inference.huggingface.co/models/${mode
 - Excellent for programmatic text insertion
 - Built for complex use cases
 
-### 4. **Dual AI Provider Support**
-- OpenAI for quality (but costs money)
-- Hugging Face as free alternative
-- Easy to switch via environment variables
-- Demonstrates abstraction skills
+### 4. **OpenAI Integration**
+- Industry-leading GPT models
+- Reliable and fast responses
+- Simple API integration
+- High-quality text generation
 
 ### 5. **Modular Architecture**
 - Clear separation: UI, state, services, types
@@ -539,21 +494,6 @@ This is an interview task submission, but feedback is welcome!
 
 MIT License - feel free to use this code for learning purposes.
 
-## 👤 Author
-
-**Arang Solanki**
-- Interview Task for Chronicle
-- Position: Senior Frontend Engineer
-- Date: December 2024
-
-## 🙏 Acknowledgments
-
-- **Chronicle** for the interesting challenge
-- **ProseMirror** community for excellent documentation
-- **XState** team for the powerful state management library
-- **OpenAI** for the GPT API
-- **Hugging Face** for free AI inference
-
 ## 📚 Resources & References
 
 ### Official Documentation
@@ -561,7 +501,6 @@ MIT License - feel free to use this code for learning purposes.
 - [ProseMirror Guide](https://prosemirror.net/docs/guide/)
 - [XState Docs](https://stately.ai/docs/xstate)
 - [OpenAI API](https://platform.openai.com/docs)
-- [Hugging Face Inference](https://huggingface.co/docs/api-inference/)
 
 ### Learning Resources
 - [ProseMirror Examples](https://prosemirror.net/examples/)

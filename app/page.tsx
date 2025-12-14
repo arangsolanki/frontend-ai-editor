@@ -2,20 +2,57 @@
  * Home Page Component
  * 
  * Main page of the AI Writing Assistant application.
- * Displays the editor and provides information about the app.
+ * Protected with authentication - shows login or editor based on auth state.
  */
 
+'use client';
+
+import { useAuth } from '@/lib/auth-context';
 import Editor from '@/components/editor/editor';
+import LoginForm from '@/components/auth/login-form';
 
 export default function Home() {
+  const { isAuthenticated, login, logout } = useAuth();
+
+  // Show login form if not authenticated
+  if (!isAuthenticated) {
+    return <LoginForm onLogin={login} />;
+  }
+
+  // Show main editor once authenticated
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <header className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            AI Writing Assistant
-          </h1>
+        {/* Header with Logout */}
+        <header className="text-center mb-8">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex-1"></div>
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white flex-1">
+              AI Writing Assistant
+            </h1>
+            <div className="flex-1 flex justify-end">
+              <button
+                onClick={logout}
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center gap-2"
+                aria-label="Logout"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg>
+                Logout
+              </button>
+            </div>
+          </div>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             An intelligent text editor powered by AI. Write your thoughts, and let artificial intelligence 
             help you continue your narrative seamlessly.
@@ -99,8 +136,8 @@ export default function Home() {
               AI-Powered
             </h3>
             <p className="text-gray-600 dark:text-gray-300 text-sm">
-              Leverages advanced language models (OpenAI/Hugging Face) to intelligently 
-              continue your writing.
+              Leverages OpenAI's GPT models to intelligently continue your writing 
+              with natural language generation.
             </p>
           </div>
         </section>
@@ -119,7 +156,6 @@ export default function Home() {
               'XState 5',
               'Tailwind CSS',
               'OpenAI API',
-              'Hugging Face',
             ].map((tech) => (
               <span
                 key={tech}
@@ -144,4 +180,3 @@ export default function Home() {
     </main>
   );
 }
-

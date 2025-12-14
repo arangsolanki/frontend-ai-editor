@@ -148,7 +148,7 @@ export default function Home() {
               AI-Powered
             </h3>
             <p className="text-gray-600 dark:text-gray-300 text-sm">
-              Leverages OpenAI's GPT models to intelligently continue your writing 
+              Leverages OpenAI&apos;s GPT models to intelligently continue your writing 
               with natural language generation.
             </p>
           </div>

@@ -5,7 +5,7 @@ This guide will walk you through setting up the AI Writing Assistant from scratc
 ## Prerequisites
 
 ### Required Software
-- **Node.js** 18.0.0 or higher ([Download](https://nodejs.org/))
+- **Node.js** 22.0.0 or higher ([Download](https://nodejs.org/))
 - **npm** (comes with Node.js) or **yarn** or **pnpm**
 - **Git** (optional, for cloning)
 
@@ -306,7 +306,7 @@ npm start
 
 ### Still Having Issues?
 
-1. **Check Node version:** Must be 18.0.0+
+1. **Check Node version:** Must be 22.0.0+
 2. **Check .env.local location:** Must be in project root (same folder as package.json)
 3. **Restart everything:**
    ```bash

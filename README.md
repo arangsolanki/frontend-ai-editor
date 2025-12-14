@@ -155,7 +155,7 @@ lib/
 
 ### Prerequisites
 
-- **Node.js** 18.0.0 or higher
+- **Node.js** 22.0.0 or higher
 - **npm** or **yarn** or **pnpm**
 - **OpenAI API Key** or **Hugging Face API Token**
 

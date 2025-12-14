@@ -1,0 +1,43 @@
+{
+  "name": "ai-editor-chronicle",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-assisted text editor built with ProseMirror, XState, and Next.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.33.9",
+    "prosemirror-model": "^1.22.3",
+    "prosemirror-schema-basic": "^1.2.3",
+    "prosemirror-keymap": "^1.2.2",
+    "prosemirror-history": "^1.4.1",
+    "prosemirror-commands": "^1.6.0",
+    "xstate": "^5.18.0",
+    "@xstate/react": "^4.1.0",
+    "openai": "^4.67.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.6.0",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

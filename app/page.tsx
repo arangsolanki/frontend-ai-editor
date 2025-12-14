@@ -12,7 +12,19 @@ import Editor from '@/components/editor/editor';
 import LoginForm from '@/components/auth/login-form';
 
 export default function Home() {
-  const { isAuthenticated, login, logout } = useAuth();
+  const { isAuthenticated, isLoading, login, logout } = useAuth();
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Show login form if not authenticated
   if (!isAuthenticated) {
